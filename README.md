@@ -79,6 +79,15 @@ Invoke-WebRequest -Uri "https://github.com/shaka-project/shaka-packager/releases
 Rename-Item -Path "packager-win-x64.exe" -NewName "shaka-packager.exe"
 ```
 
+- SMPlayer (MKVファイル再生用)
+```powershell
+winget install SMPlayer.SMPlayer
+```
+- VLC (MKVファイル再生用)
+```powershell
+winget install VideoLAN.VLC
+```
+
 ## 手順
 
 ### フェーズ1:.wvdファイルを取得する
@@ -94,6 +103,7 @@ Rename-Item -Path "packager-win-x64.exe" -NewName "shaka-packager.exe"
 
 Pixel 9 Proが動作している状態で
 ```powershell
+cd C:\Decrypt
 adb root
 adb devices
 adb push frida-server-17.8.0-android-x86_64 /sdcard
@@ -130,6 +140,7 @@ keydive -kw -a player
 
 #### shaka-packagerをC:\PathAreaディレクトリにインストール
 - 上記の「必要ソフトウェア」セクションのコマンドを参考にshaka-packagerをC:\PathAreaディレクトリにインストールしておく
+- ファイル名を忘れずにshaka-packager.exeにリネームする
 
 ### フェーズ3: 制限されたコンテンツを再生し復号
 - DRMコンテンツを再生し、WidevineProxy2を開く。下部の"+"を展開し、"Cmd"をコピー (Ctrl+A, Ctrl+C)。或いは"Cmd"の青いリンク部分をクリックしてもコピーできる。
@@ -137,7 +148,3 @@ keydive -kw -a player
 - 又はエクスプローラーで保存したい場所を開き、右クリックメニューの「ターミナルで開く」をクリックしてPowershellを開く（この状態ではカレントディレクトリは保存したい場所になっている）。
 - ダウンロードしたい品質を選びEnter
 - 完了！これでビデオは復号されて保存された。.mkvファイルは`SMPlayer`や`VLC`などのプレーヤーで再生できる。
-```powershell
-winget install SMPlayer.SMPlayer
-winget install VideoLAN.VLC
-```
