@@ -75,10 +75,8 @@ Invoke-WebRequest -Uri "https://github.com/nilaoda/N_m3u8DL-RE/releases/download
 ```powershell
 cd C:\PathArea
 Invoke-WebRequest -Uri "https://github.com/shaka-project/shaka-packager/releases/download/v3.6.0/packager-win-x64.exe" -OutFile "packager-win-x64.exe"
-7z x "packager-win-x64.exe"
 Rename-Item -Path "packager-win-x64.exe" -NewName "shaka-packager.exe"
 ```
-
 - SMPlayer (MKVファイル再生用)
 ```powershell
 winget install SMPlayer.SMPlayer
@@ -124,16 +122,16 @@ chmod +x /data/local/tmp/frida-server-17.8.0-android-x86_64
 cd C:\Decrypt
 keydive -kw -a player
 ```
-- Kaltura DRM テストアプリが自動インストールされる。テストアプリを開き、"Provision Widevine" -> "Refresh" -> "Test DRM Playback" -> "Kaltura" or "Google"のいずれかを選択。テストプレイが開始される。
-- C:\Decrypt 直下の "device" -> "Google" -> "sdk_gphone64_x86_64" -> "33100" -> "(数字)" -> "client_id.bin", "private_key.pem", "google_sdk_gphone64_x86_64_19.5.0@XXXXX.wvd" といった名前の3つのファイルが自動生成される。これで必要な.wvdファイルが取得できた。
+- Kaltura DRM テストアプリが自動インストールされる。テストアプリを開き、「Provision Widevine」、「Refresh」、「Test DRM Playback」->「Kaltura」 or「Google」のいずれかを選択。テストプレイが開始される。
+- C:\Decrypt 直下の 「device」フォルダ -> 「Google」フォルダ -> 「sdk_gphone64_x86_64」フォルダ -> 「33100」フォルダ -> 「(数字)」フォルダ -> 「client_id.bin」, 「private_key.pem」, 「google_sdk_gphone64_x86_64_19.5.0@XXXXX.wvd」 といった名前の3つのファイルが自動生成される。これで必要な.wvdファイルが取得できた。
 
 ### フェーズ2: WidevineProxy2 と n_m3u8dl-reとshaka-packagerのセットアップ
 
 #### WidevineProxy2をインストール
 - 上記の「必要ソフトウェア」セクションのコマンドを参考にFirefoxにWidevineProxy2をインストールしておく
-- インストールしたら、"Enabled"をクリック
-- "Widevine Device"が選択済みであることを確認
-- Widevine Deviceセクション -> Choose File -> google_sdk_gphone64_x86_64_19.5.0@XXXXX.wvdを選択
+- インストールしたら、「Enabled」をクリック（設定が有効化される）
+- 「Widevine Device」が選択済みであることを確認（Remote CDMでないことを確認）
+- Widevine Deviceセクション -> Choose File -> 「google_sdk_gphone64_x86_64_19.5.0@XXXXX.wvd」を選択
 
 #### n_m3u8dl-reをC:\PathAreaディレクトリにインストール
 - 上記の「必要ソフトウェア」セクションのコマンドを参考にn_m3u8dl-reをC:\PathAreaディレクトリにインストールしておく
@@ -144,7 +142,7 @@ keydive -kw -a player
 
 ### フェーズ3: 制限されたコンテンツを再生し復号
 - DRMコンテンツを再生し、WidevineProxy2を開く。下部の"+"を展開し、"Cmd"をコピー (Ctrl+A, Ctrl+C)。或いは"Cmd"の青いリンク部分をクリックしてもコピーできる。
-- カレントディレクトリをダウンロードしたい場所に移動してからPowershellにペーストして実行
+- カレントディレクトリをダウンロードしたい場所に移動してからPowershellにペーストして実行（右クリック又はCtrl+Vでペースト）
 - 又はエクスプローラーで保存したい場所を開き、右クリックメニューの「ターミナルで開く」をクリックしてPowershellを開く（この状態ではカレントディレクトリは保存したい場所になっている）。
 - ダウンロードしたい品質を選びEnter
 - 完了！これでビデオは復号されて保存された。.mkvファイルは`SMPlayer`や`VLC`などのプレーヤーで再生できる。
