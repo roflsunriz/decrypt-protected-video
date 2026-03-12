@@ -1,14 +1,80 @@
 # 制限されたビデオをダウンロードし復号する方法
 
 ## 注意
-このドキュメントは学術目的・セキュリティ研究用です。悪用を禁止します。
+このドキュメントは学術目的・セキュリティ研究目的です。悪用を禁止します。
 
 ## 前提環境
 - Microsoft Windows 11 25H2
-- Mozilla Firefox / Google Chrome
+- Mozilla Firefox (推奨) / Google Chrome (未検証)
+```powershell
+winget install Mozilla.Firefox.ja
+```
 - Python 3.14.2
-- FFMpeg essentialsまたはfullをpathに追加済み
+```powershell
+winget install Python.Python.3.14
+```
+- FFmpeg
+```powershell
+winget install Gyan.FFmepg
+```
 - Powershell 7
+```powershell
+winget install Microsoft.PowerShell
+```
+- Pathに追加するための`PathArea`ディレクトリを作成
+```powershell
+New-Item -ItemType Directory -Path "$env:USERPROFILE\PathArea"
+```
+- ユーザー環境変数のPathに恒久的に追加
+- 追加後はPowerShellを再起動する必要がある。
+```powershell
+[Environment]::SetEnvironmentVariable("Path", "$env:USERPROFILE\PathArea;$env:Path", "User")
+```
+
+## 必要ソフトウェア
+- Android Studio
+```powershell
+winget install Google.AndroidStudio
+```
+- Platform Tools
+```powershell
+winget install Google.PlatformTools
+```
+- 7zip
+```powershell
+winget install 7zip.7zip
+```
+- Frida Server
+```powershell
+Invoke-WebRequest -Uri "https://github.com/frida/frida/releases/download/17.8.0/frida-server-17.8.0-android-x86_64.xz" -OutFile "frida-server-17.8.0-android-x86_64.xz"
+7z x "frida-server-17.8.0-android-x86_64.xz"
+```
+- KeyDive
+```powershell
+pip install keydive
+```
+- WidevineProxy2
+```powershell
+cd $env:USERPROFILE
+Invoke-WebRequest -Uri "https://github.com/DevLARLEY/WidevineProxy2/releases/download/v0.9.0/WidevineProxy2_v0.9.0.xpi" -OutFile "WidevineProxy2_v0.9.0.xpi"
+Start-Process "C:\Program Files\Mozilla Firefox\firefox.exe" -ArgumentList "$env:USERPROFILE\WidevineProxy2_v0.9.0.xpi"
+
+```
+- n_m3u8dl-re
+ - Pathが通っている場所にインストール 
+```powershell
+cd $env:USERPROFILE\PathArea
+Invoke-WebRequest -Uri "https://github.com/nilaoda/N_m3u8DL-RE/releases/download/v0.5.1-beta/N_m3u8DL-RE_v0.5.1-beta_win-x64_20251029.zip" -OutFile "N_m3u8DL-RE_v0.5.1-beta_win-x64_20251029.zip"
+7z x "N_m3u8DL-RE_v0.5.1-beta_win-x64_20251029.zip"
+```
+- shaka-packager
+ - Pathが通っている場所にインストール
+```powershell
+cd $env:USERPROFILE\PathArea
+Invoke-WebRequest -Uri "https://github.com/shaka-project/shaka-packager/releases/download/v3.6.0/packager-win-x64.exe" -OutFile "packager-win-x64.exe"
+7z x "packager-win-x64.exe"
+Rename-Item -Path "packager-win-x64.exe" -NewName "shaka-packager.exe"
+```
 
 ## 手順
 
@@ -65,9 +131,9 @@ keydive -kw -a player
 - Widevine Deviceセクション -> Choose File -> google_sdk_gphone64_x86_64_19.5.0@XXXXX.wvdを選択
 
 #### n_m3u8dl-reをpathが通っている箇所にインストール
-ffmpegフォルダにffmpegをインストール済みでこのフォルダにpathが通っていると仮定
+`PathArea`ディレクトリにインストールする。
 ```powershell
-cd C:\ffmpeg
+cd $env:USERPROFILE\PathArea
 Invoke-WebRequest -Uri "https://github.com/nilaoda/N_m3u8DL-RE/releases/download/v0.5.1-beta/N_m3u8DL-RE_v0.5.1-beta_win-x64_20251029.zip" -OutFile "N_m3u8DL-RE_v0.5.1-beta_win-x64_20251029.zip"
 7z x "N_m3u8DL-RE_v0.5.1-beta_win-x64_20251029.zip"
 ```
@@ -75,13 +141,18 @@ Invoke-WebRequest -Uri "https://github.com/nilaoda/N_m3u8DL-RE/releases/download
 #### shaka-packagerをpathが通っている箇所にインストール
 shaka-packagerにリネームする
 ```powershell
-cd C:\ffmpeg
+cd $env:USERPROFILE\PathArea
 Invoke-WebRequest -Uri "https://github.com/shaka-project/shaka-packager/releases/download/v3.6.0/packager-win-x64.exe" -OutFile "packager-win-x64.exe"
 Rename-Item -Path "packager-win-x64.exe" -NewName "shaka-packager.exe"
 ```
 
 ### フェーズ3: 制限されたコンテンツを再生し復号
-- DRMコンテンツを再生し、WidevineProxy2を開く。下部の"+"を展開し、"CmdLet"をコピー (Ctrl+A, Ctrl+C)
+- DRMコンテンツを再生し、WidevineProxy2を開く。下部の"+"を展開し、"Cmd"をコピー (Ctrl+A, Ctrl+C)。或いは"Cmd"の青いリンク部分をクリックしてもコピーできる。
 - カレントディレクトリをダウンロードしたい場所に移動してからPowershellにペーストして実行
+- 又はエクスプローラーで保存したい場所を開き、右クリックメニューの「ターミナルで開く」をクリックしてPowershellを開く（この状態ではカレントディレクトリは保存したい場所になっている）。
 - ダウンロードしたい品質を選びEnter
-- 完了！お疲れ様でした。
+- 完了！これでビデオは復号されて保存された。.mkvファイルは`SMPlayer`や`VLC`などのプレーヤーで再生できる。
+```powershell
+winget install SMPlayer.SMPlayer
+winget install VideoLAN.VLC
+```
