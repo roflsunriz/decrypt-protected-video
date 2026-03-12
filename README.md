@@ -60,7 +60,7 @@ pip install keydive
 ```powershell
 cd C:\Decrypt
 Invoke-WebRequest -Uri "https://github.com/DevLARLEY/WidevineProxy2/releases/download/v0.9.0/WidevineProxy2_v0.9.0.xpi" -OutFile "WidevineProxy2_v0.9.0.xpi"
-Start-Process "C:\Program Files\Mozilla Firefox\firefox.exe" -ArgumentList "$env:USERPROFILE\WidevineProxy2_v0.9.0.xpi"
+Start-Process "C:\Program Files\Mozilla Firefox\firefox.exe" -ArgumentList "C:\Decrypt\WidevineProxy2_v0.9.0.xpi"
 
 ```
 - n_m3u8dl-re
