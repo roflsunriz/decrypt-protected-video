@@ -22,13 +22,15 @@ winget install Gyan.FFmepg
 winget install Microsoft.PowerShell
 ```
 - Pathに追加するための`PathArea`ディレクトリを作成
+- ワーキングディレクトリとしてC:\に`Decrypt`を作成
 ```powershell
-New-Item -ItemType Directory -Path "$env:USERPROFILE\PathArea"
+New-Item -ItemType Directory -Path "C:\PathArea"
+New-Item -ItemType Directory -Path "C:\Decrypt"
 ```
 - ユーザー環境変数のPathに恒久的に追加
 - 追加後はPowerShellを再起動する必要がある。
 ```powershell
-[Environment]::SetEnvironmentVariable("Path", "$env:USERPROFILE\PathArea;$env:Path", "User")
+[Environment]::SetEnvironmentVariable("Path", "C:\PathArea;$env:Path", "User")
 ```
 
 ## 必要ソフトウェア
@@ -46,7 +48,7 @@ winget install 7zip.7zip
 ```
 - Frida Server
 ```powershell
-cd $env:USERPROFILE
+cd C:\Decrypt
 Invoke-WebRequest -Uri "https://github.com/frida/frida/releases/download/17.8.0/frida-server-17.8.0-android-x86_64.xz" -OutFile "frida-server-17.8.0-android-x86_64.xz"
 7z x "frida-server-17.8.0-android-x86_64.xz"
 ```
@@ -56,7 +58,7 @@ pip install keydive
 ```
 - WidevineProxy2
 ```powershell
-cd $env:USERPROFILE
+cd C:\Decrypt
 Invoke-WebRequest -Uri "https://github.com/DevLARLEY/WidevineProxy2/releases/download/v0.9.0/WidevineProxy2_v0.9.0.xpi" -OutFile "WidevineProxy2_v0.9.0.xpi"
 Start-Process "C:\Program Files\Mozilla Firefox\firefox.exe" -ArgumentList "$env:USERPROFILE\WidevineProxy2_v0.9.0.xpi"
 
@@ -64,14 +66,14 @@ Start-Process "C:\Program Files\Mozilla Firefox\firefox.exe" -ArgumentList "$env
 - n_m3u8dl-re
 - `PathArea`ディレクトリにインストール 
 ```powershell
-cd $env:USERPROFILE\PathArea
+cd C:\PathArea
 Invoke-WebRequest -Uri "https://github.com/nilaoda/N_m3u8DL-RE/releases/download/v0.5.1-beta/N_m3u8DL-RE_v0.5.1-beta_win-x64_20251029.zip" -OutFile "N_m3u8DL-RE_v0.5.1-beta_win-x64_20251029.zip"
 7z x "N_m3u8DL-RE_v0.5.1-beta_win-x64_20251029.zip"
 ```
 - shaka-packager
 - `PathArea`ディレクトリにインストール
 ```powershell
-cd $env:USERPROFILE\PathArea
+cd C:\PathArea
 Invoke-WebRequest -Uri "https://github.com/shaka-project/shaka-packager/releases/download/v3.6.0/packager-win-x64.exe" -OutFile "packager-win-x64.exe"
 7z x "packager-win-x64.exe"
 Rename-Item -Path "packager-win-x64.exe" -NewName "shaka-packager.exe"
@@ -109,11 +111,11 @@ chmod +x /data/local/tmp/frida-server-17.8.0-android-x86_64
 
 新しいターミナルで：
 ```powershell
-cd "$env:USERPROFILE\Documents"
+cd C:\Decrypt
 keydive -kw -a player
 ```
 - Kaltura DRM テストアプリが自動インストールされる。テストアプリを開き、"Provision Widevine" -> "Refresh" -> "Test DRM Playback" -> "Kaltura" or "Google"のいずれかを選択。テストプレイが開始される。
-- "$env:USERPROFILE\Documents" 直下の "device" -> "Google" -> "sdk_gphone64_x86_64" -> "33100" -> "(数字)" -> "client_id.bin", "private_key.pem", "google_sdk_gphone64_x86_64_19.5.0@XXXXX.wvd" といった名前の3つのファイルが自動生成される。これで必要な.wvdファイルが取得できた。
+- C:\Decrypt 直下の "device" -> "Google" -> "sdk_gphone64_x86_64" -> "33100" -> "(数字)" -> "client_id.bin", "private_key.pem", "google_sdk_gphone64_x86_64_19.5.0@XXXXX.wvd" といった名前の3つのファイルが自動生成される。これで必要な.wvdファイルが取得できた。
 
 ### フェーズ2: WidevineProxy2 と n_m3u8dl-reとshaka-packagerのセットアップ
 
@@ -123,11 +125,11 @@ keydive -kw -a player
 - "Widevine Device"が選択済みであることを確認
 - Widevine Deviceセクション -> Choose File -> google_sdk_gphone64_x86_64_19.5.0@XXXXX.wvdを選択
 
-#### n_m3u8dl-reを`PathArea`ディレクトリにインストール
-- 上記の「必要ソフトウェア」セクションのコマンドを参考にn_m3u8dl-reを`PathArea`ディレクトリにインストールしておく
+#### n_m3u8dl-reをC:\PathAreaディレクトリにインストール
+- 上記の「必要ソフトウェア」セクションのコマンドを参考にn_m3u8dl-reをC:\PathAreaディレクトリにインストールしておく
 
-#### shaka-packagerを`PathArea`ディレクトリにインストール
-- 上記の「必要ソフトウェア」セクションのコマンドを参考にshaka-packagerを`PathArea`ディレクトリにインストールしておく
+#### shaka-packagerをC:\PathAreaディレクトリにインストール
+- 上記の「必要ソフトウェア」セクションのコマンドを参考にshaka-packagerをC:\PathAreaディレクトリにインストールしておく
 
 ### フェーズ3: 制限されたコンテンツを再生し復号
 - DRMコンテンツを再生し、WidevineProxy2を開く。下部の"+"を展開し、"Cmd"をコピー (Ctrl+A, Ctrl+C)。或いは"Cmd"の青いリンク部分をクリックしてもコピーできる。
