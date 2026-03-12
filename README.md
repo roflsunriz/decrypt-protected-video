@@ -54,7 +54,7 @@ cd C:\Users\UserName\Documents
 keydive -kw -a player
 ```
 - Kaltura DRM テストアプリが自動インストールされる。テストアプリを開き、"Provision Widevine" -> "Refresh" -> "Test DRM Playback" -> "Kaltura" or "Google"のいずれかを選択。テストプレイが開始される。
-- "frida-server-17.8.0-android-x86_64"フォルダの"device" -> "Google" -> "sdk_gphone64_x86_64" -> "33100" -> "(数字)" -> "client_id.bin", "private_key.pem", "google_sdk_gphone64_x86_64_19.5.0@XXXXX.wvd" といった名前の3つのファイルが自動生成される。これで必要な.wvdファイルが取得できた。
+- `C:\Users\UserName\Documents` 直下の "device" -> "Google" -> "sdk_gphone64_x86_64" -> "33100" -> "(数字)" -> "client_id.bin", "private_key.pem", "google_sdk_gphone64_x86_64_19.5.0@XXXXX.wvd" といった名前の3つのファイルが自動生成される。これで必要な.wvdファイルが取得できた。
 
 ### フェーズ2: WidevineProxy2 と n_m3u8dl-reとshaka-packagerのセットアップ
 
