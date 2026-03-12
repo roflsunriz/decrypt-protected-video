@@ -26,7 +26,7 @@ winget install Google.AndroidStudio Google.PlatformTools 7zip.7zip
 任意の場所（今回はC:\Users\UserName\Documents）で展開
 ```powershell
 cd C:\Users\UserName\Documents
-Invoke-WebRequest -Uri "https://github.com/frida/frida/releases/download/17.8.0/frida-server-17.8.0-android-x86_64.xz" -OutFile .
+Invoke-WebRequest -Uri "https://github.com/frida/frida/releases/download/17.8.0/frida-server-17.8.0-android-x86_64.xz" -OutFile "frida-server-17.8.0-android-x86_64.xz"
 7z x "frida-server-17.8.0-android-x86_64.xz"
 pip install keydive
 ```
@@ -37,15 +37,20 @@ adb root
 adb devices
 adb push frida-server-17.8.0-android-x86_64 /sdcard
 adb shell
+```
+
+`adb shell` 実行後、Android シェル上で以下を入力：
+
+```shell
 mv /sdcard/frida-server-17.8.0-android-x86_64 /data/local/tmp
-chmod  +x /data/local/tmp/frida-server-17.8.0-android-x86_64
+chmod +x /data/local/tmp/frida-server-17.8.0-android-x86_64
 /data/local/tmp/frida-server-17.8.0-android-x86_64
 ```
 このターミナルはFrida Serverが実行中なので開きっぱなしにしておく
 
 新しいターミナルで：
 ```powershell
-cd C:\Users\UserName\Documents\frida-server-17.8.0-android-x86_64
+cd C:\Users\UserName\Documents
 keydive -kw -a player
 ```
 - Kaltura DRM テストアプリが自動インストールされる。テストアプリを開き、"Provision Widevine" -> "Refresh" -> "Test DRM Playback" -> "Kaltura" or "Google"のいずれかを選択。テストプレイが開始される。
@@ -63,7 +68,7 @@ keydive -kw -a player
 ffmpegフォルダにffmpegをインストール済みでこのフォルダにpathが通っていると仮定
 ```powershell
 cd C:\ffmpeg
-Invoke-WebRequest -Uri "https://github.com/nilaoda/N_m3u8DL-RE/releases/download/v0.5.1-beta/N_m3u8DL-RE_v0.5.1-beta_win-x64_20251029.zip" -OutFile .
+Invoke-WebRequest -Uri "https://github.com/nilaoda/N_m3u8DL-RE/releases/download/v0.5.1-beta/N_m3u8DL-RE_v0.5.1-beta_win-x64_20251029.zip" -OutFile "N_m3u8DL-RE_v0.5.1-beta_win-x64_20251029.zip"
 7z x "N_m3u8DL-RE_v0.5.1-beta_win-x64_20251029.zip"
 ```
 
@@ -71,7 +76,7 @@ Invoke-WebRequest -Uri "https://github.com/nilaoda/N_m3u8DL-RE/releases/download
 shaka-packagerにリネームする
 ```powershell
 cd C:\ffmpeg
-Invoke-WebRequest -Uri "https://github.com/shaka-project/shaka-packager/releases/download/v3.6.0/packager-win-x64.exe" -OutFile .
+Invoke-WebRequest -Uri "https://github.com/shaka-project/shaka-packager/releases/download/v3.6.0/packager-win-x64.exe" -OutFile "packager-win-x64.exe"
 Rename-Item -Path "packager-win-x64.exe" -NewName "shaka-packager.exe"
 ```
 
