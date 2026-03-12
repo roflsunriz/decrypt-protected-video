@@ -4,12 +4,11 @@
 このドキュメントは学術目的・セキュリティ研究用です。悪用を禁止します。
 
 ## 前提環境
-Microsoft Windows 11 25H2
-Mozilla Firefox / Google Chrome
-Python 3.14.2
-FFMpeg essentialsまたはfullをpathに追加済み
-Git
-Powershell 7
+- Microsoft Windows 11 25H2
+- Mozilla Firefox / Google Chrome
+- Python 3.14.2
+- FFMpeg essentialsまたはfullをpathに追加済み
+- Powershell 7
 
 ## 手順
 
