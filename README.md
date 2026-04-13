@@ -49,8 +49,15 @@ winget install 7zip.7zip
 - Frida Server
 ```powershell
 cd C:\Decrypt
-Invoke-WebRequest -Uri "https://github.com/frida/frida/releases/download/17.8.0/frida-server-17.8.0-android-x86_64.xz" -OutFile "frida-server-17.8.0-android-x86_64.xz"
-7z x "frida-server-17.8.0-android-x86_64.xz"
+
+$Headers = @{ "User-Agent" = "PowerShell" }
+$Release = Invoke-RestMethod -Headers $Headers -Uri "https://api.github.com/repos/frida/frida/releases/latest"
+$Asset = $Release.assets | Where-Object { $_.name -match '^frida-server-.*-android-x86_64\.xz$' } | Select-Object -First 1
+if (-not $Asset) { throw "frida/frida の最新リリースに frida-server のアセットが見つかりません" }
+Invoke-WebRequest -Uri $Asset.browser_download_url -OutFile "frida-server.xz"
+7z x "frida-server.xz"
+$FridaServer = Get-ChildItem -File -Filter "frida-server-*-android-x86_64" | Select-Object -First 1
+Rename-Item -Path $FridaServer.FullName -NewName "frida-server"
 ```
 - KeyDive
 ```powershell
@@ -59,22 +66,34 @@ pip install keydive
 - WidevineProxy2
 ```powershell
 cd C:\Decrypt
-Invoke-WebRequest -Uri "https://github.com/DevLARLEY/WidevineProxy2/releases/download/v0.9.0/WidevineProxy2_v0.9.0.xpi" -OutFile "WidevineProxy2_v0.9.0.xpi"
-Start-Process "C:\Program Files\Mozilla Firefox\firefox.exe" -ArgumentList "C:\Decrypt\WidevineProxy2_v0.9.0.xpi"
+$Headers = @{ "User-Agent" = "PowerShell" }
+$Release = Invoke-RestMethod -Headers $Headers -Uri "https://api.github.com/repos/DevLARLEY/WidevineProxy2/releases/latest"
+$Asset = $Release.assets | Where-Object { $_.name -match '^WidevineProxy2_.*\.xpi$' } | Select-Object -First 1
+if (-not $Asset) { throw "DevLARLEY/WidevineProxy2 の最新リリースに xpi アセットが見つかりません" }
+Invoke-WebRequest -Uri $Asset.browser_download_url -OutFile "WidevineProxy2.xpi"
+Start-Process "C:\Program Files\Mozilla Firefox\firefox.exe" -ArgumentList "C:\Decrypt\WidevineProxy2.xpi"
 
 ```
 - n_m3u8dl-re
 - `PathArea`ディレクトリにインストール 
 ```powershell
 cd C:\PathArea
-Invoke-WebRequest -Uri "https://github.com/nilaoda/N_m3u8DL-RE/releases/download/v0.5.1-beta/N_m3u8DL-RE_v0.5.1-beta_win-x64_20251029.zip" -OutFile "N_m3u8DL-RE_v0.5.1-beta_win-x64_20251029.zip"
-7z x "N_m3u8DL-RE_v0.5.1-beta_win-x64_20251029.zip"
+$Headers = @{ "User-Agent" = "PowerShell" }
+$Release = Invoke-RestMethod -Headers $Headers -Uri "https://api.github.com/repos/nilaoda/N_m3u8DL-RE/releases/latest"
+$Asset = $Release.assets | Where-Object { $_.name -match '^N_m3u8DL-RE_.*_win-x64_.*\.zip$' } | Select-Object -First 1
+if (-not $Asset) { throw "nilaoda/N_m3u8DL-RE の最新リリースに Windows x64 zip アセットが見つかりません" }
+Invoke-WebRequest -Uri $Asset.browser_download_url -OutFile "N_m3u8DL-RE.zip"
+7z x "N_m3u8DL-RE.zip"
 ```
 - shaka-packager
 - `PathArea`ディレクトリにインストール
 ```powershell
 cd C:\PathArea
-Invoke-WebRequest -Uri "https://github.com/shaka-project/shaka-packager/releases/download/v3.6.0/packager-win-x64.exe" -OutFile "packager-win-x64.exe"
+$Headers = @{ "User-Agent" = "PowerShell" }
+$Release = Invoke-RestMethod -Headers $Headers -Uri "https://api.github.com/repos/shaka-project/shaka-packager/releases/latest"
+$Asset = $Release.assets | Where-Object { $_.name -match '^packager-win-x64\.exe$' } | Select-Object -First 1
+if (-not $Asset) { throw "shaka-project/shaka-packager の最新リリースに packager-win-x64.exe が見つかりません" }
+Invoke-WebRequest -Uri $Asset.browser_download_url -OutFile "packager-win-x64.exe"
 Rename-Item -Path "packager-win-x64.exe" -NewName "shaka-packager.exe"
 ```
 - SMPlayer (MKVファイル再生用)
@@ -104,16 +123,16 @@ Pixel 9 Proが動作している状態で
 cd C:\Decrypt
 adb root
 adb devices
-adb push frida-server-17.8.0-android-x86_64 /sdcard
+adb push "frida-server" /sdcard
 adb shell
 ```
 
 `adb shell` 実行後、Android シェル上で以下を入力：
 
 ```shell
-mv /sdcard/frida-server-17.8.0-android-x86_64 /data/local/tmp
-chmod +x /data/local/tmp/frida-server-17.8.0-android-x86_64
-/data/local/tmp/frida-server-17.8.0-android-x86_64
+mv /sdcard/frida-server /data/local/tmp
+chmod +x /data/local/tmp/frida-server
+/data/local/tmp/frida-server
 ```
 このターミナルはFrida Serverが実行中なので開きっぱなしにしておく
 
