@@ -15,7 +15,7 @@ winget install Python.Python.3.14
 ```
 - FFmpeg
 ```powershell
-winget install Gyan.FFmepg
+winget install Gyan.FFmpeg
 ```
 - Powershell 7
 ```powershell
@@ -111,14 +111,14 @@ winget install VideoLAN.VLC
 
 #### Android Studioセットアップ（バーチャルデバイス用）
 - 上記の「必要ソフトウェア」セクションのコマンドを参考にインストールしておく
-- AndroidStudioは特に何も弄らずにインストールし、「新しいプロジェクト」->そのまま適当にプロジェクトを作成
+- Android Studioは既定の設定でインストールし、「新しいプロジェクト」からプロジェクトを作成する
 - 新しいプロジェクトで左上の三点メニューの「Tools」->「Device Manager」->「Create Virtual Device」 -> 「Pixel 9 Pro」 -> Servicesを「Google APIs」System Imageに「Google APIs Intel x86_64 Atom System Image」を選択、Finish
 - Device Managerで作られた仮想デバイスのPixel 9 Proの再生ボタンをクリックして開始
 
 #### Frida Server & KeyDive セットアップ
 - 上記の「必要ソフトウェア」セクションのコマンドを参考にインストールしておく
 
-Pixel 9 Proが動作している状態で
+Pixel 9 Proが動作している状態で、次を実行する。
 ```powershell
 cd C:\Decrypt
 adb root
@@ -134,9 +134,9 @@ mv /sdcard/frida-server /data/local/tmp
 chmod +x /data/local/tmp/frida-server
 /data/local/tmp/frida-server
 ```
-このターミナルはFrida Serverが実行中なので開きっぱなしにしておく
+Frida Serverを実行している間は、このターミナルを開いたままにしておく。
 
-新しいターミナルで：
+新しいターミナルを開き、次を実行する。
 ```powershell
 cd C:\Decrypt
 keydive -kw -a player
@@ -164,4 +164,4 @@ keydive -kw -a player
 - カレントディレクトリをダウンロードしたい場所に移動してからPowershellにペーストして実行（右クリック又はCtrl+Vでペースト）
 - 又はエクスプローラーで保存したい場所を開き、右クリックメニューの「ターミナルで開く」をクリックしてPowershellを開く（この状態ではカレントディレクトリは保存したい場所になっている）。
 - ダウンロードしたい品質を選びEnter
-- 完了！これでビデオは復号されて保存された。.mkvファイルは`SMPlayer`や`VLC`などのプレーヤーで再生できる。
+- 処理が完了すると、復号されたビデオが保存される。.mkvファイルは`SMPlayer`や`VLC`などのプレーヤーで再生できる。

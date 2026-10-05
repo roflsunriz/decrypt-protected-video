@@ -1,0 +1,84 @@
+name: 不具合報告
+description: 再現できる不具合や資料の誤りを報告します。
+title: '[Bug] '
+labels:
+- bug
+body:
+- type: markdown
+  attributes:
+    value: ありがとうございます。入力できる範囲で具体的に記載してください。脆弱性の報告は [SECURITY.md](https://github.com/roflsunriz/decrypt-protected-video/blob/main/SECURITY.md)
+      の窓口を使い、公開Issueへ詳細を書かないでください。
+- type: checkboxes
+  id: preflight
+  attributes:
+    label: 事前確認
+    description: 確認できた項目にチェックしてください。未確認でも報告できます。
+    options:
+    - label: READMEと関連手順を確認しました。
+    - label: 既存のIssueを検索しました。
+  validations:
+    required: false
+- type: input
+  id: version
+  attributes:
+    label: 対象の版・リビジョン
+    description: リリース版、コミット、または閲覧した文書の版。不明な場合は「不明」と起動・入手方法を記載してください。
+  validations:
+    required: true
+- type: textarea
+  id: environment
+  attributes:
+    label: 対象と環境
+    description: 対象文書のファイル・見出し・手順番号、文書のコミット、OS、説明に関係するツールの版。コンテンツの鍵、Cookie、認証情報、デバイス資格情報は添付しないでください。
+  validations:
+    required: true
+- type: textarea
+  id: reproduction
+  attributes:
+    label: 再現手順
+    description: 初期状態、操作順、発生頻度、最小の入力例を記載してください。
+    placeholder: '1. ...
+
+      2. ...
+
+      3. ...'
+  validations:
+    required: true
+- type: textarea
+  id: expected
+  attributes:
+    label: 期待した結果
+    description: どの結果を期待しましたか。根拠となる文書があれば示してください。
+  validations:
+    required: true
+- type: textarea
+  id: actual
+  attributes:
+    label: 実際の結果
+    description: 表示、動作、エラーを具体的に記載してください。
+  validations:
+    required: true
+- type: textarea
+  id: diagnostics
+  attributes:
+    label: 診断情報
+    description: 関連するログ・最小例・画像を、秘密情報と個人情報を除いて添付してください。私的なデータ一式や認証ファイルは不要です。
+  validations:
+    required: false
+- type: textarea
+  id: additional
+  attributes:
+    label: 補足
+    description: 回避策、以前動いた版、関連Issueなど。
+  validations:
+    required: false
+- type: checkboxes
+  id: privacy
+  attributes:
+    label: 公開情報の確認
+    description: 非公開リポジトリの場合も、秘密値を含めずアクセス可能な人に共有できる内容だけを記載してください。
+    options:
+    - label: APIキー、Cookie、認証情報、個人情報、非公開の脆弱性詳細を含めないことを確認しました。
+      required: true
+  validations:
+    required: true
