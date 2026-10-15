@@ -165,3 +165,7 @@ keydive -kw -a player
 - 又はエクスプローラーで保存したい場所を開き、右クリックメニューの「ターミナルで開く」をクリックしてPowershellを開く（この状態ではカレントディレクトリは保存したい場所になっている）。
 - ダウンロードしたい品質を選びEnter
 - 処理が完了すると、復号されたビデオが保存される。.mkvファイルは`SMPlayer`や`VLC`などのプレーヤーで再生できる。
+
+## 開発時の参照先
+
+プロジェクト固有の構成・環境・調査知見は [findings.md](findings.md)、作業規範は [AGENTS.md](AGENTS.md)、検証記録は [verification.md](verification.md) を参照してください。
